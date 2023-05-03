@@ -1,6 +1,8 @@
 async function newFormHandler(event) {
     event.preventDefault();
 
+
+    //Adds a new post when form is submitted
     const title = document.querySelector('input[name="post-title"]').value;
     const post_content = document.querySelector('textarea[name="post-content"]').value.trim();
 

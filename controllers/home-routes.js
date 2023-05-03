@@ -7,6 +7,7 @@ const {
     Comment
 } = require('../models');
 
+//Finds all posts on the dashboard
 router.get('/', (req, res) => {
     Post.findAll({
             attributes: [
@@ -44,6 +45,7 @@ router.get('/', (req, res) => {
     });
 });
 
+//Finds one post on the dashboard
 router.get('/post/:id', (req, res) => {
     Post.findOne({
             where: {
@@ -69,6 +71,7 @@ router.get('/post/:id', (req, res) => {
             }
         ]
     })
+    //Error message displayed
     .then(dbPostData => {
         if (!dbPostData) {
             res.status(404).json({
@@ -92,6 +95,7 @@ router.get('/post/:id', (req, res) => {
     });
 });
 
+//Routes the user back to their dashboard if logged in
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
         res.redirect('/');

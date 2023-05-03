@@ -4,8 +4,9 @@ const {
     Post,
     Comment
 } = require('../../models');
-const withAuth = require('../..utils/auth');
+const withAuth = require('../../utils/auth.js');
 
+//Creating route for homepage 
 router.get('/', (req, res) => {
     Comment.findAll()
         .then((dbCommentData) => res.json(dbCommentData))
@@ -15,6 +16,7 @@ router.get('/', (req, res) => {
         });
 });
 
+//Creating new comment section 
 router.post('/', withAuth, (req, res) => {
     if (req.session) {
         Comment.create({

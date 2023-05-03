@@ -8,6 +8,7 @@ const {
 } = require('../models');
 const withAuth = require('../utils/auth');
 
+//Finds all posts associated with users
 router.get('/', withAuth, (req, res) => {
     Post.findAll({
             where: {
@@ -48,6 +49,7 @@ router.get('/', withAuth, (req, res) => {
     });
 });
 
+//Finds one post associated with a user
 router.get('/edit/:id', withAuth, (req, res) => {
     Post.findOne({
             where: {
@@ -73,6 +75,7 @@ router.get('/edit/:id', withAuth, (req, res) => {
             }
         ]
     })
+    //Message displayed if no post is found
     .then(dbPostData => {
         if (!dbPostData) {
             res.status(404).json({

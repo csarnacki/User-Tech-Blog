@@ -6,6 +6,7 @@ const {
 } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+//Sorting posted comments in descending order
 router.get('/', (req, res) => {
     Post.findAll({
             attributes: ['id', 'content', 'title', 'created_at'],
@@ -33,6 +34,8 @@ router.get('/', (req, res) => {
     });
 });
 
+
+//Pulling out one specific post when selected
 router.get('/:id', (req, res) => {
     Post.findOne({
             where: {
@@ -53,6 +56,7 @@ router.get('/:id', (req, res) => {
             },
         ],   
     })
+    //If that post is not found display this message
     .then((dbPostData) => {
         if (!dbPostData) {
             res.status(404).json({
@@ -68,6 +72,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
+//Updating the post content when selected by the user
 router.put('/:id', withAuth, (req, res) => {
     Post.update({
             title: req.body.title,
@@ -77,6 +82,7 @@ router.put('/:id', withAuth, (req, res) => {
             id: req.params.id,
         },
     })
+    //If that post is not found display this message
     .then((dbPostData) => {
         if (!dbPostData) {
             res.status(404).json({
@@ -92,12 +98,14 @@ router.put('/:id', withAuth, (req, res) => {
     });
 });
 
+//Deleting a selected post
 router.delete('/:id', withAuth, (req, res) => {
     Post.destroy({
             where: {
                 id: req.params.id,
             },
         })
+        //Message displayed if that post does not exist
         .then((dbPostData) => {
             if (!dbPostData) {
                 res.status(404).json({

@@ -1,6 +1,8 @@
 async function signupFormHandler(event) {
     event.preventDefault();
 
+
+    //Prompts the user to sign up if they do not have an accouont
     const username = document.querySelector('#username-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
 

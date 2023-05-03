@@ -1,6 +1,8 @@
 async function editFormHandler(event) {
     event.preventDefault();
 
+
+    //Allows the user to edit an existing post
     const title = document.querySelector('input[name="post-title"]').value;
     const post_content = document.querySelector('textarea[name="post-content"]').value.trim();
     const post_id = window.location.toString().split('/')[

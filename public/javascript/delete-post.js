@@ -1,6 +1,8 @@
 async function deleteFormHandler(event) {
     event.preventDefault();
 
+
+    //Deletes an existing post
     const post_id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];

@@ -1,6 +1,8 @@
 async function loginFormHandler(event) {
     event.preventDefault();
 
+
+    //If the user is not logged in, then the user is prompted to log in
     const username = document.querySelector('#username-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
 

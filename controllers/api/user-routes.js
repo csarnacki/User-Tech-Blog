@@ -5,6 +5,7 @@ const {
     Comment
 } = require('../../models');
 
+//Finds a list of users
 router.get('/', (req, res) => {
     User.findAll({
             attributes: {
@@ -18,6 +19,7 @@ router.get('/', (req, res) => {
         });
 });
 
+//Finds a specific user when searched for
 router.get('/:id', (req, res) => {
     User.findOne({
             attributes: {
@@ -40,6 +42,7 @@ router.get('/:id', (req, res) => {
             }
         ]
     })
+    //Message displayed if no user is found
     .then(dbUserData => {
         if (!dbUserData) {
             res.status(404),json({
@@ -55,11 +58,13 @@ router.get('/:id', (req, res) => {
     });
 });
 
+//Create a new user including username and password
 router.post('/', (req, res) => {
     User.create({
             username: req.body.username,
             password: req.body.password
     })
+    //Login credentials are saved and user is set to logged in status
     .then(dbUserData => {
         req.session.save(() => {
             req.session.user_id = dbUserData.id;
@@ -75,12 +80,14 @@ router.post('/', (req, res) => {
     });
 });
 
+//Finding the user when on the login page
 router.post('/login', (req, res) => {
     User.findOne({
             where: {
                 username: req.body.username
             }
         })
+        //Message displayed if that user does not exist
         .then(dbUserData => {
             if (!dbUserData) {
                 res.status(404).json({
@@ -88,7 +95,7 @@ router.post('/login', (req, res) => {
                 });
                 return;
             }
-
+            //Storing credential data for the user
             req.session.save(() => {
                 req.session.user_id = dbUserData.id;
                 req.session.username = dbUserData.username;
@@ -101,7 +108,7 @@ router.post('/login', (req, res) => {
             });
 
             const validPassword = dbUserData.checkPassword(req.body.password);
-
+            //Validating password
             if (!validPassword) {
                 res.status(404).json({
                     message: 'Wrong password'
@@ -123,6 +130,7 @@ router.post('/login', (req, res) => {
         
 });
 
+//Removes the user's session data when they log out
 router.post('/logout', (req, res) => {
     if (req.session.loggedIn) {
         req.session.destroy(() => {
